@@ -22,7 +22,7 @@ class Article {
 abstract class Filter {
   bool apply(Article article);
 
-  void getFilterCategory() {
+  void printFilterCategory() {
     print('\nfiltered for:\n');
   }
 }
@@ -38,7 +38,7 @@ class CategoryFilter implements Filter {
   }
 
   @override
-  void getFilterCategory() {
+  void printFilterCategory() {
     print('\nfiltered for category: $category\n');
   }
 }
@@ -54,7 +54,7 @@ class PriceFilter implements Filter {
   }
 
   @override
-  void getFilterCategory() {
+  void printFilterCategory() {
     print('\nfiltered for price: $requiredMaxPrice\n');
   }
 }
@@ -70,20 +70,20 @@ class LeftoversFilter implements Filter {
   }
 
   @override
-  void getFilterCategory() {
+  void printFilterCategory() {
     print('\nfiltered for product leftovers: $requiredMaxLeftovers\n');
   }
 }
 
 void applyFilter(List<Article> articles, Filter filter) {
-  filter.getFilterCategory();
-  for (int article = 0; article < articles.length; article += 1) {
-    var product = articles[article];
-    if (filter.apply(product) == true) {
-      print('${product.id}, ${product.category}, ${product.name}, '
-          '${product.price}, ${product.productLeftovers}');
-    } else
+  filter.printFilterCategory();
+  for (int articleIndex = 0; articleIndex < articles.length; articleIndex += 1) {
+    var product = articles[articleIndex];
+    if (filter.apply(product) == false) {
       continue;
+    }
+    print('${product.id}, ${product.category}, ${product.name}, '
+        '${product.price}, ${product.productLeftovers}');
   }
 }
 
